@@ -1,0 +1,32 @@
+{% extends "worldcup_base.html"  %}
+{% block content %}
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<center>
+<form id='guess_form' action='.' method='POST'>
+
+{%load staticfiles %}
+<img src='{% static a_path %}' alt="巴西"/> VS <img src='{% static b_path %}' alt="克罗地亚"><p>
+<input type='radio' name='match1' value='m1_win' {%ifequal match1 'm1_win'%}checked='checked'{%endifequal%}/>W
+<input type='radio' name='match1' value='m1_equals'  {%ifequal match1 'm1_equals'%}checked='checked'{%endifequal%}/>E
+<input type='radio' name='match1' value='m1_lose'  {%ifequal match1 'm1_lose'%}checked='checked'{%endifequal%}/>W
+<p>
+
+<img src='{% static a_path %}' alt="巴西"/> VS <img src='{% static b_path %}' alt="克罗地亚"><p>
+<input type='radio' name='match1' value='m1_win' {%ifequal match1 'm1_win'%}checked='checked'{%endifequal%}/>W
+<input type='radio' name='match1' value='m1_equals'  {%ifequal match1 'm1_equals'%}checked='checked'{%endifequal%}/>E
+<input type='radio' name='match1' value='m1_lose'  {%ifequal match1 'm1_lose'%}checked='checked'{%endifequal%}/>W
+<p>
+
+<input type='submit' name='Submit' value='submit'/>
+<p>
+You choose {{match1}}
+<p>
+
+</form>
+ </center>
+
+
+{% endblock %}

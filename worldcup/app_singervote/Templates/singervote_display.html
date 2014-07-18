@@ -1,0 +1,52 @@
+{% extends "singervote_base.html"  %}
+{% block content %}
+{%load static%}
+
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<form id='guess_form' action='.' method='POST'>
+
+
+<div id="container">
+    <div id="header"><br><h1>Welcome! Please vote your favorate singer!</h1></div>
+<div id="maincontent">
+<div id="content">
+<br><br><br><br><br>
+<table  border=0 cellpadding=2 cellspacing=0>
+<tr>
+{% for player, value, score, feed in list_list %}
+{% ifequal feed 'True' %}</tr><tr>{% endifequal %}
+<td width="50"></td><td>
+<img src='{% get_static_prefix %}images/{{player}}.png' />
+{{player}}  
+<br><br>
+<input type='checkbox' name='player' value='{{player}}'  {%ifequal value 'True'%}checked='checked'{%endifequal%}/>Vote  Total: {{score}}
+&nbsp;&nbsp;&nbsp;&nbsp;</td>
+{% endfor %}
+</tr>
+<tr>
+<td colspan='8' height='200' align='bottom'>
+Please input your Sonicwall English Name:
+<input type='text' name='username' style="width=2px;" value='{{username}}'/>
+<input type='submit' name='Submit' value='submit'/>
+<p>
+<font color='red'>{{err_msg}}</font>
+{{response_msg}}
+<p>
+<input type="hidden" name="isNotFirst" value="1"/>
+{% if admin %}
+<input type='text' name='admin_key' />
+{% endif %}
+</td></tr>
+<tr><td colspan='8' height='100' align='center'>
+</td></tr>
+</table>
+</div>
+
+
+</form>
+</div>
+</div>
+{% endblock %}

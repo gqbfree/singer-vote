@@ -1,0 +1,69 @@
+{% extends "worldcup_base.html"  %}
+{% block content %}
+{%load static%}
+
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+{% if expired %}
+<h1>It's out of time to play. (Our game from am 8:00 ~ pm 8:00 every day)
+{% else %}
+<form id='guess_form' action='.' method='POST'>
+
+
+<div id="container">
+    <div id="header"><br><h1>Welcome to World_Cup Guess Site, Please enjoy yourself!</h1></div>
+<div id="maincontent">
+<div id="sidebar">Latest Ranking
+<table align='center'>
+{%for user, score in list_rank%}
+<tr><td><a href='/history/{{user}}'>{{user}}</a></td><td>:&nbsp;{{score}}</td></tr>
+{% endfor %}
+</table><br>
+<center>Click name to see history<p>
+(Because no remote access, score update may be delayed for several hours after the match day)
+</center>
+</div>
+<div id="content">
+<br><br><br><br><br>
+<table  border=0 cellpadding=2 cellspacing=0>
+<tr>
+{% for contry1, contry2, radio_name, radio_value, feed in list_list %}
+{% ifequal feed 'True' %}</tr><tr>{% endifequal %}
+<td width="50"></td><td>
+<img src='{% get_static_prefix %}images/{{contry1}}.png' />
+{{contry1}} VS {{contry2}} 
+<img src='{% get_static_prefix %}images/{{contry2}}.png' ><br><br>
+<input type='radio' name='{{radio_name}}' value='win' {%ifequal radio_value 'win'%}checked='checked'{%endifequal%}/>胜
+<input type='radio' name='{{radio_name}}' value='draw'  {%ifequal radio_value 'draw'%}checked='checked'{%endifequal%} disabled/>平
+<input type='radio' name='{{radio_name}}' value='lose'  {%ifequal radio_value 'lose'%}checked='checked'{%endifequal%}/>胜
+&nbsp;&nbsp;&nbsp;&nbsp;</td>
+{% endfor %}
+</tr>
+<tr>
+<td colspan='8' height='200' align='bottom'>
+Please input your Sonicwall English Name:
+<input type='text' name='username' style="width=2px;" value='{{username}}'/>
+<input type='submit' name='Submit' value='submit'/>
+<p>
+<font color='red'>{{err_msg}}</font>
+{{response_msg}}
+<p>
+<input type="hidden" name="isNotFirst" value="1"/>
+{% if admin %}
+<input type='text' name='admin_key' />
+{% endif %}
+</td></tr>
+<tr><td colspan='8' height='100' align='center'>
+<font color='green'><h2>Rule: One match One score, More score will win!</h2></font>
+</td></tr>
+</table>
+</div>
+
+
+</form>
+</div>
+</div>
+{% endif %}
+{% endblock %}
