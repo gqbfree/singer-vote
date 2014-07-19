@@ -22,6 +22,6 @@ urlpatterns = patterns('',
     (r'^guess/',   worldcup_guess),
     (r'^history/(.+)/', worldcup_history),
     (r'^vote/', singervote_display),
-#    (r'^test/.+)/', worldcup_test),
+    (r'^admin/', singervote_admin_proc),
 #    (r'^test/.+)/', worldcup_test),
 )

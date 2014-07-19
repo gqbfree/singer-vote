@@ -7,6 +7,43 @@ import os,re,datetime
 player_list = ['Tom', 'jack', 'mike', 'jerry', 'joy', 'eric']
 player_score = {'Tom':0, 'jack':0, 'mike':0, 'jerry':0, 'joy':0, 'eric':0}
 
+def singervote_admin_redirect(err_msg):
+    list_list = []
+    for item in player_list:
+        q = vote_rank.objects.filter(player=item)                
+        if q:
+            for it in q:
+                list_list.append([item, it.url])    
+        else:
+            list_list.append([item, ''])
+    list_dic = {"list_list":list_list, 'err_msg':err_msg}
+    return render_to_response('singervote_admin.html', list_dic)
+
+
+def singervote_admin_proc(request):
+    isNotFirst = request.POST.get("isNotFirst", '')
+    password = request.POST.get("password", '')
+    if isNotFirst != '1':
+        return singervote_admin_redirect('')
+    if password != '9527':
+        err_msg = 'The password is incorrect!'
+        return singervote_admin_redirect(err_msg)
+
+    for item in player_list:
+        url = request.POST.get(item, '')
+        q = vote_rank.objects.filter(player=item)
+        if q:
+            for it in q:
+                it.url = url
+                it.save()
+        else:
+            q = vote_rank(player=item, score=0, url=url)
+            q.save()  
+
+    err_msg = 'Operation successfully!' 
+    return singervote_admin_redirect(err_msg)
+
+
 def singervote_user_validate(username):
     if username.lower() == 'admin_martin':
         return True
@@ -18,23 +55,25 @@ def singervote_user_validate(username):
         return True
     return False 
 
-def singervote_redirect(response_msg, err_msg, result):
+def singervote_user_redirect(response_msg, err_msg, result):
     list_list = []
     feed    = 'False'
     r       = 'False' 
     counter = 0
     for item in player_list:
+        url = ''
         q = vote_rank.objects.filter(player=item)
         if q:
             for it in q:
                 player_score[item] = it.score
+                url = it.url
 
         if result:
             if item in result:
                 r = 'True'
             else:
                 r = 'False'
-        list_list.append([item, r, player_score[item], feed])
+        list_list.append([item, r, player_score[item], url, feed])
         counter += 1
         if counter % 4 == 0:
             feed = 'True'
@@ -54,32 +93,32 @@ def singervote_display(request):
 
 
     if isNotFirst == '':
-        return singervote_redirect('', '', '') 
+        return singervote_user_redirect('', '', '') 
 
     isAdmin = 0
     err_msg = '' 
     if isNotFirst == '1':
         if username == '':
             err_msg = 'Failed!!!  Please input your SonicWall English Name Firstly!(For example: Tom)'
-            return singervote_redirect('', err_msg, result)
+            return singervote_user_redirect('', err_msg, result)
 
     if isNotFirst == '1' and username != '':
         if singervote_user_validate(username) == False:
             err_msg = 'Your name is invalide, please check it......'
-            return singervote_redirect('', err_msg, result)
+            return singervote_user_redirect('', err_msg, result)
 
     if not result:
         err_msg = 'Please chose at least 1 player!'
-        return singervote_redirect('', err_msg, result)
+        return singervote_user_redirect('', err_msg, result)
 
     if len(result) > 5:
         err_msg = "You couldn't vote exceed 5 palyers!"
-        return singervote_redirect('', err_msg, result)
+        return singervote_user_redirect('', err_msg, result)
 
     q = vote_display.objects.filter(user=username)
     if q:
         err_msg = "You already voted....."
-        return singervote_redirect('', err_msg, result)
+        return singervote_user_redirect('', err_msg, result)
     else:
         vote = ''
         for it in result:
@@ -102,9 +141,7 @@ def singervote_display(request):
             g = vote_rank(player=item, score=1)
             g.save()
    
- 
-    print player_score
-    return singervote_redirect(response_msg, err_msg, result)
+    return singervote_user_redirect(response_msg, err_msg, result)
 
 
 

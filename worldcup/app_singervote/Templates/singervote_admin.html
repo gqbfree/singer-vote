@@ -15,30 +15,24 @@
 <div id="content">
 <br><br><br><br><br>
 <table  border=0 cellpadding=2 cellspacing=0>
-<tr>
-{% for player, value, score, song_url, feed in list_list %}
-{% ifequal feed 'True' %}</tr><tr>{% endifequal %}
-<td width="50"></td><td>
+<tr><td colspan='2' ><center><h3><a href='/vote/'>return vote page</a></h3></center></td></tr>
+{% for player, song_url in list_list %}
+<tr><td width="50"></td><td>
 <img src='{% get_static_prefix %}images/{{player}}.png' />
 {{player}}  
-<br><br>
-<input type='checkbox' name='player' value='{{player}}'  {%ifequal value 'True'%}checked='checked'{%endifequal%}/>Vote  Total: {{score}}
-&nbsp;&nbsp;&nbsp;&nbsp;<a href='//{{song_url}}' target='_blank'>试听</a></td>
-{% endfor %}
+<br><br></td>
+<td>song url: <input type='text' name='{{player}}' value='{{song_url}}'></td>
 </tr>
+{% endfor %}
 <tr>
 <td colspan='8' height='200' align='bottom'>
-Please input your Sonicwall English Name:
-<input type='text' name='username' style="width=2px;" value='{{username}}'/>
+Input the password, then submit it:
+<input type='password' name='password' style="width=2px;" />
 <input type='submit' name='Submit' value='submit'/>
 <p>
 <font color='red'>{{err_msg}}</font>
-{{response_msg}}
 <p>
 <input type="hidden" name="isNotFirst" value="1"/>
-{% if admin %}
-<input type='text' name='admin_key' />
-{% endif %}
 </td></tr>
 <tr><td colspan='8' height='100' align='center'>
 </td></tr>
