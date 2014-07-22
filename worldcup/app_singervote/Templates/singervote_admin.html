@@ -16,12 +16,13 @@
 <br><br><br><br><br>
 <table  border=0 cellpadding=2 cellspacing=0>
 <tr><td colspan='2' ><center><h3><a href='/vote/'>return vote page</a></h3></center></td></tr>
-{% for player, song_url in list_list %}
+{% for player, song_name, song_url in list_list %}
 <tr><td width="50"></td><td>
 <img src='{% get_static_prefix %}images/{{player}}.png' />
 {{player}}  
 <br><br></td>
-<td>song url: <input type='text' name='{{player}}' value='{{song_url}}'></td>
+<td>song name: <input type='text' name='{{player}}_name' value='{{song_name}}' maxlength='64'></td>
+<td>song url: <input type='text' name='{{player}}_url' value='{{song_url}}'></td>
 </tr>
 {% endfor %}
 <tr>

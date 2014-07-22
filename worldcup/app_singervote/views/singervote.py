@@ -13,7 +13,7 @@ def singervote_admin_redirect(err_msg):
         q = vote_rank.objects.filter(player=item)                
         if q:
             for it in q:
-                list_list.append([item, it.url])    
+                list_list.append([item, it.name, it.url])    
         else:
             list_list.append([item, ''])
     list_dic = {"list_list":list_list, 'err_msg':err_msg}
@@ -30,14 +30,18 @@ def singervote_admin_proc(request):
         return singervote_admin_redirect(err_msg)
 
     for item in player_list:
-        url = request.POST.get(item, '')
+        song_url  = item+'_url'
+        song_name = item+'_name'
+        url  = request.POST.get(song_url, '')
+        name = request.POST.get(song_name, '')
         q = vote_rank.objects.filter(player=item)
         if q:
             for it in q:
-                it.url = url
+                it.name = name
+                it.url  = url
                 it.save()
         else:
-            q = vote_rank(player=item, score=0, url=url)
+            q = vote_rank(player=item, score=0, name=name, url=url)
             q.save()  
 
     err_msg = 'Operation successfully!' 
@@ -61,19 +65,21 @@ def singervote_user_redirect(response_msg, err_msg, result):
     r       = 'False' 
     counter = 0
     for item in player_list:
-        url = ''
+        song_url  = ''
+        song_name = ''
         q = vote_rank.objects.filter(player=item)
         if q:
             for it in q:
                 player_score[item] = it.score
-                url = it.url
+                song_url  = it.url
+                song_name = it.name
 
         if result:
             if item in result:
                 r = 'True'
             else:
                 r = 'False'
-        list_list.append([item, r, player_score[item], url, feed])
+        list_list.append([item, r, player_score[item], song_name, song_url, feed])
         counter += 1
         if counter % 7 == 0:
             feed = 'True'

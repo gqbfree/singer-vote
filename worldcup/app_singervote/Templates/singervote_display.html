@@ -10,7 +10,7 @@
 <br><br><br><br><br>
 <table cellpadding="0" cellspacing="0" border="0" align="center">
 	<tr>
-{% for player, value, score, song_url, feed in list_list %}
+{% for player, value, score, song_name, song_url, feed in list_list %}
 {% ifequal feed 'True' %}</tr><tr>{% endifequal %}
     	<td>
         	<table width="175" cellpadding="0" cellspacing="1" border="0" bgcolor="#D1D1D1">
@@ -24,7 +24,7 @@
                     	<p style="line-height:125%">
                         <b>&nbsp;&nbsp;{{player}}</b>
                         <br>
-                        &nbsp;&nbsp;Why are you so happy
+                        &nbsp;&nbsp;{{song_name}}
                         </p>
                     </td>
                 </tr>
