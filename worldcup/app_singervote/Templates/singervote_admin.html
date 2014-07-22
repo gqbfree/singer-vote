@@ -6,7 +6,7 @@
 <p></p>
 <p></p>
 <p></p>
-<form id='guess_form' action='.' method='POST'>
+<form id='guess_form' action='/add/' method='POST'>
 
 
 <div id="container">
@@ -15,8 +15,16 @@
 <div id="content">
 <br><br><br><br><br>
 <table  border=0 cellpadding=2 cellspacing=0>
-<tr><td colspan='5' ><center><h3><a href='/vote/'>return vote page</a></h3></center></td></tr>
-<tr><td width="50"></td><td>
+<tr><td width='50'></td>
+{% ifequal anynomous 1 %}
+<td colspan='3' >Notice: Current is Anynomous status ---- <a href='/anynomous/0'>Set Real Name In Vote Page</a></td>
+{% else %}
+<td colspan='3' >Notice: Current is Real Name status ---- <a href='/anynomous/1'>Set Anynomous In Vote Page</a></td>
+{% endifequal%}
+<td><center><h3><a href='/vote/'>return vote page</a></h3></center></td>
+</tr>
+<tr><td width="50"></td>
+<td></td>
 <td>player name: <input type='text' name='add_player_name' value='' maxlength='64'></td>
 <td>song name: <input type='text' name='add_song_name' value='' maxlength='64'></td>
 <td>song url: <input type='text' name='add_song_url' value=''></td>
@@ -24,11 +32,8 @@
 <tr><td colspan='5' height='50'></td></tr></tr>
 {% for player_id, player, score, song_name, song_url in list_list %}
 <tr><td width="50"></td><td>
-<img src='{% get_static_prefix %}images/{{player}}.png' />
-{{player}} 
-<br><br></td>
-<td>score:       {{score}} &nbsp;&nbsp;</td>
-<td>player name: {{player}}</td>
+<img src='{% get_static_prefix %}images/{{player}}.png' /></td>
+<td>player name: {{player}} --- score:{{score}}</td>
 <td>song name:   {{song_name}} </td>
 <td>song url:    {{song_url}}</td>
 <td><a href='/del/{{player_id}}'>Delete</a></td>
@@ -36,9 +41,6 @@
 {% endfor %}
 <tr>
 <td colspan='8' height='200' align='bottom'>
-Input the password, then submit it:
-<input type='password' name='password' style="width=2px;" />
-<input type='submit' name='Submit' value='submit'/>
 <p>
 <font color='red'>{{err_msg}}</font>
 <p>

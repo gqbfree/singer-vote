@@ -16,7 +16,12 @@
         	<table width="175" cellpadding="0" cellspacing="1" border="0" bgcolor="#D1D1D1">
             	<tr>
                 	<td colspan="2">
-                    	<img width="175" src='{% get_static_prefix %}images/{{player}}.png'>
+                        {% ifequal anynomous 0 %}
+                    	<img width="175" src='{% get_static_prefix %}images/{{player}}.png' />
+                        <center>{{player}}</center>
+                        {% else %}
+                    	<img width="175" src='{% get_static_prefix %}images/default.png' />
+                        {% endifequal %}
                     </td>
                 </tr>
             	<tr>

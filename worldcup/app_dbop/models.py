@@ -38,11 +38,15 @@ class vote_rank(models.Model):
     score    = models.IntegerField(default=0)
     name     = models.CharField(max_length=64)
     url      = models.CharField(max_length=256)
+    del_flag = models.IntegerField(default=0)
+    def __str__(self):
+        return '%s %s %s %s %s %s' % (self.id, self.player, self.score, self.name, self.url, self.del_flag)
+
+class vote_admin(models.Model):
+    anynomous = models.IntegerField(default=1)
 
     def __str__(self):
-        return '%s %s %s %s %s' % (self.id, self.player, self.score, self.name, self.url)
-
-
+        return '%s' % (self.anynomous)
 
 
 
