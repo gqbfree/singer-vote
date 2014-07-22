@@ -165,11 +165,11 @@ def singervote_display(request):
     response_msg  = "Your choice is : "
     
     for item in result:
-        response_msg += item+', '
-        q = vote_rank.objects.filter(player_id=item)
+        q = vote_rank.objects.filter(id=item)
         if q:
             for it in q:
                 it.score += 1
+                response_msg += it.name+', '
                 it.save()
         else:
             err_msg = 'The player you chose is invalid!'
