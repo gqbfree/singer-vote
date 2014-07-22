@@ -34,13 +34,13 @@ class vote_display(models.Model):
 
 
 class vote_rank(models.Model):
-    player   = models.CharField(max_length=128,primary_key=True)
+    player   = models.CharField(max_length=128)
     score    = models.IntegerField(default=0)
     name     = models.CharField(max_length=64)
     url      = models.CharField(max_length=256)
 
     def __str__(self):
-        return '%s %s %s %s' % (self.player, self.score, self.name, self.url)
+        return '%s %s %s %s %s' % (self.id, self.player, self.score, self.name, self.url)
 
 
 

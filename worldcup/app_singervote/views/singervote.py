@@ -3,19 +3,19 @@ from app_dbop.models import vote_display, vote_rank
 from wcproc import *
 import os,re,datetime
 
-
-player_list = ['Tom', 'jack', 'mike', 'jerry', 'joy', 'eric']
-player_score = {'Tom':0, 'jack':0, 'mike':0, 'jerry':0, 'joy':0, 'eric':0}
+def singervote_user_del(request, player_id):
+    del_id = int(player_id)
+    vote_rank.objects.filter(id=del_id).delete()
+    return singervote_admin_redirect('') 
+        
 
 def singervote_admin_redirect(err_msg):
     list_list = []
-    for item in player_list:
-        q = vote_rank.objects.filter(player=item)                
-        if q:
-            for it in q:
-                list_list.append([item, it.name, it.url])    
-        else:
-            list_list.append([item, ''])
+    q = vote_rank.objects.all().order_by('-id')                
+    if q:
+        for it in q:
+            list_list.append([it.id, it.player, it.score, it.name, it.url])    
+
     list_dic = {"list_list":list_list, 'err_msg':err_msg}
     return render_to_response('singervote_admin.html', list_dic)
 
@@ -23,26 +23,26 @@ def singervote_admin_redirect(err_msg):
 def singervote_admin_proc(request):
     isNotFirst = request.POST.get("isNotFirst", '')
     password = request.POST.get("password", '')
+    player_name = request.POST.get('add_player_name', '')
+    url  = request.POST.get('add_song_url', '')
+    name = request.POST.get('add_song_name', '')
+
     if isNotFirst != '1':
         return singervote_admin_redirect('')
     if password != '9527':
         err_msg = 'The password is incorrect!'
         return singervote_admin_redirect(err_msg)
+    if player_name == '':
+        err_msg = 'please input player name!'
+        return singervote_admin_redirect(err_msg)
 
-    for item in player_list:
-        song_url  = item+'_url'
-        song_name = item+'_name'
-        url  = request.POST.get(song_url, '')
-        name = request.POST.get(song_name, '')
-        q = vote_rank.objects.filter(player=item)
-        if q:
-            for it in q:
-                it.name = name
-                it.url  = url
-                it.save()
-        else:
-            q = vote_rank(player=item, score=0, name=name, url=url)
-            q.save()  
+    q = vote_rank.objects.filter(player=player_name)
+    if q:
+        err_msg = 'The player existed already!'
+        return singervote_admin_redirect(err_msg)
+    else:
+        q = vote_rank(player=player_name, name=name, url=url, score=0)
+        q.save()
 
     err_msg = 'Operation successfully!' 
     return singervote_admin_redirect(err_msg)
@@ -67,9 +67,11 @@ def singervote_user_redirect(response_msg, err_msg, result):
     for item in player_list:
         song_url  = ''
         song_name = ''
+        player_id = ''
         q = vote_rank.objects.filter(player=item)
         if q:
             for it in q:
+                player_id = it.id
                 player_score[item] = it.score
                 song_url  = it.url
                 song_name = it.name
@@ -79,7 +81,7 @@ def singervote_user_redirect(response_msg, err_msg, result):
                 r = 'True'
             else:
                 r = 'False'
-        list_list.append([item, r, player_score[item], song_name, song_url, feed])
+        list_list.append([item, player_id, r, player_score[item], song_name, song_url, feed])
         counter += 1
         if counter % 7 == 0:
             feed = 'True'
@@ -95,8 +97,7 @@ def singervote_display(request):
     isNotFirst = request.POST.get("isNotFirst", '')
     username   = request.POST.get("username", '')
     admin_key  = request.POST.get("admin_key", '')
-    result     = request.POST.getlist('player', '')
-
+    result     = request.POST.getlist('player_id', '')
 
     if isNotFirst == '':
         return singervote_user_redirect('', '', '') 
@@ -138,15 +139,14 @@ def singervote_display(request):
     
     for item in result:
         response_msg += item+', '
-        q = vote_rank.objects.filter(player=item)
+        q = vote_rank.objects.filter(player_id=item)
         if q:
             for it in q:
                 it.score += 1
                 it.save()
         else:
-            g = vote_rank(player=item, score=1)
-            g.save()
-   
+            err_msg = 'The player you chose is invalid!'
+ 
     return singervote_user_redirect(response_msg, err_msg, result)
 
 

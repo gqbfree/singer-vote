@@ -1,5 +1,10 @@
+global{
+	font-family: Arial, Verdana, sans-serif;
+	color:#2A2A2A;
+	font-size:12px;
+	}
 
-body{background-color:#c0c0c0}
+body{background-color:#99d3e0}
 
 #container{width:100%}
 
@@ -9,31 +14,4 @@ body{background-color:#c0c0c0}
 #maincontent{
 height:500px;
 margin-bottom:5px;
-}
-
-#sidebar{
-width:200px;
-text-align:center;
-float:right;
-overflow:hidden;
-}
-
-#sidebar2{
-height:250px;
-margin-left:15%;
-text-align:center;
-overflow:hidden;
-}
-
-#content{
-height:250px; 
-margin-bottom:5px;
-margin-left:5%;
-text-align:center;
-}
-
-#footer{
-height:60px;
-
-
 }

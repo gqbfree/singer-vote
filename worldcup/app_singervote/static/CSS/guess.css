@@ -1,39 +1,16 @@
-
-body{background-color:#c0c0c0}
+body{
+    background-color:#99d3e0;
+    font-family:Arial, Verdana, sans-serif;
+	color:#2A2A2A;
+	font-size:12px;
+    }
 
 #container{width:100%}
 
-#header{margin-bottom:5px;  height:70px; text-align:center;}
+#header{margin-bottom:5px;  height:70px; text-align:left;}
 
 
 #maincontent{
 height:500px;
 margin-bottom:5px;
-}
-
-#sidebar{
-width:200px;
-text-align:center;
-float:right;
-overflow:hidden;
-}
-
-#sidebar2{
-height:250px;
-margin-left:15%;
-text-align:center;
-overflow:hidden;
-}
-
-#content{
-height:250px; 
-margin-bottom:5px;
-margin-left:5%;
-text-align:center;
-}
-
-#footer{
-height:60px;
-
-
 }

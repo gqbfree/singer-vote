@@ -15,23 +15,17 @@
 <div id="content">
 <br><br><br><br><br>
 <table  border=0 cellpadding=2 cellspacing=0>
-<tr><td colspan='5' ><center><h3><a href='/vote/'>return vote page</a></h3></center></td></tr>
-<tr><td width="50"></td><td>
-<td>player name: <input type='text' name='add_player_name' value='' maxlength='64'></td>
-<td>song name: <input type='text' name='add_song_name' value='' maxlength='64'></td>
-<td>song url: <input type='text' name='add_song_url' value=''></td>
-<td align='center'><input type='submit' name='Submit' value='Add a new player'/></td>
-<tr><td colspan='5' height='50'></td></tr></tr>
+<tr><td colspan='2' ><center><h3><a href='/vote/'>return vote page</a></h3></center></td></tr>
+<tr><td></td></tr>
 {% for player_id, player, score, song_name, song_url in list_list %}
 <tr><td width="50"></td><td>
-<img src='{% get_static_prefix %}images/{{player}}.png' />
+<img src='{% get_static_prefix %}images/{{player_id}}.png' />
 {{player}} 
 <br><br></td>
-<td>score:       {{score}} &nbsp;&nbsp;</td>
-<td>player name: {{player}}</td>
-<td>song name:   {{song_name}} </td>
-<td>song url:    {{song_url}}</td>
-<td><a href='/del/{{player_id}}'>Delete</a></td>
+<td>score: {{score}} &nbsp;&nbsp;</td>
+<td>player name: <input type='text' name='{{player}}' value='{{player}}' maxlength='64'></td>
+<td>song name: <input type='text' name='{{player}}_name' value='{{song_name}}' maxlength='64'></td>
+<td>song url: <input type='text' name='{{player}}_url' value='{{song_url}}'></td>
 </tr>
 {% endfor %}
 <tr>
