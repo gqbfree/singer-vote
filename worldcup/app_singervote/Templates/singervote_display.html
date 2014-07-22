@@ -2,32 +2,46 @@
 {% block content %}
 {%load static%}
 
-<p></p>
-<p></p>
-<p></p>
-<p></p>
 <form id='guess_form' action='.' method='POST'>
-
-
 <div id="container">
-    <div id="header"><br><h1>Welcome! Please vote your favorite singer!</h1></div>
+<div id="header"><br><h1>Welcome! Please vote your favorite singer!</h1></div>
 <div id="maincontent">
 <div id="content">
 <br><br><br><br><br>
-<table  border=0 cellpadding=2 cellspacing=0>
-<tr>
+<table cellpadding="0" cellspacing="0" border="0" align="center">
+	<tr>
 {% for player, value, score, song_url, feed in list_list %}
 {% ifequal feed 'True' %}</tr><tr>{% endifequal %}
-<td width="50"></td><td>
-<img src='{% get_static_prefix %}images/{{player}}.png' />
-{{player}}  
-<br><br>
-<input type='checkbox' name='player' value='{{player}}'  {%ifequal value 'True'%}checked='checked'{%endifequal%}/>Vote  Total: {{score}}
-&nbsp;&nbsp;&nbsp;&nbsp;<a href='//{{song_url}}' target='_blank'>试听</a></td>
-{% endfor %}
-</tr>
-<tr>
-<td colspan='8' height='200' align='bottom'>
+    	<td>
+        	<table width="175" cellpadding="0" cellspacing="1" border="0" bgcolor="#D1D1D1">
+            	<tr>
+                	<td colspan="2">
+                    	<img width="175" src='{% get_static_prefix %}images/{{player}}.png'>
+                    </td>
+                </tr>
+            	<tr>
+                	<td colspan="2" height="50">
+                    	<p style="line-height:125%">
+                        <b>&nbsp;&nbsp;{{player}}</b>
+                        <br>
+                        &nbsp;&nbsp;Why are you so happy
+                        </p>
+                    </td>
+                </tr>
+            	<tr>
+                	<td width="143" height="30">
+<input type='checkbox' name='player' value='{{player}}'  {%ifequal value 'True'%}checked='checked'{%endifequal%}/>Vote Total: {{score}}
+                    </td>
+                	<td width="32">
+                    	<a href='//{{song_url}}' target='_blank'><img src="{% get_static_prefix %}images/Play.png"></a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    {%endfor%}
+    </tr>
+    <tr>
+<td colspan='13' height='200' align='bottom'>
 Please input your Sonicwall English Name:
 <input type='text' name='username' style="width=2px;" value='{{username}}'/>
 <input type='submit' name='Submit' value='submit'/>
@@ -40,13 +54,6 @@ Please input your Sonicwall English Name:
 <input type='text' name='admin_key' />
 {% endif %}
 </td></tr>
-<tr><td colspan='8' height='100' align='center'>
-</td></tr>
 </table>
-</div>
-
-
 </form>
-</div>
-</div>
 {% endblock %}

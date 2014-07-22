@@ -75,7 +75,7 @@ def singervote_user_redirect(response_msg, err_msg, result):
                 r = 'False'
         list_list.append([item, r, player_score[item], url, feed])
         counter += 1
-        if counter % 4 == 0:
+        if counter % 7 == 0:
             feed = 'True'
         else:
             feed = 'False'
