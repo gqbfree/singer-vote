@@ -51,7 +51,7 @@ def singervote_player_del(request, player_id):
 def singervote_admin_redirect(err_msg):
     list_list = []
     anynomous = 1
-    q = vote_rank.objects.filter(del_flag=0).order_by('-id')                
+    q = vote_rank.objects.filter(del_flag=0).order_by('-score')                
     if q:
         for it in q:
             list_list.append([it.id, it.player, it.score, it.name, it.url])    

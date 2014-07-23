@@ -28,14 +28,15 @@
 <td>player name: <input type='text' name='add_player_name' value='' maxlength='64'></td>
 <td>song name: <input type='text' name='add_song_name' value='' maxlength='64'></td>
 <td>song url: <input type='text' name='add_song_url' value=''></td>
-<td align='center'><input type='submit' name='Submit' value='Add a new player'/></td>
-<tr><td colspan='5' height='50'></td></tr></tr>
+<td align='center'><input type='submit' name='Submit' value='Add a new player'/></td></tr></table>
+<table>
+<tr><td height='50' colspan='8'></td></tr>
 {% for player_id, player, score, song_name, song_url in list_list %}
 <tr><td width="50"></td><td>
 <img src='{% get_static_prefix %}images/{{player}}.png' /></td>
-<td>player name: {{player}} --- score:{{score}}</td>
-<td>song name:   {{song_name}} </td>
-<td>song url:    {{song_url}}</td>
+<td>player name: <B>{{player}}</B></td><td> score:<B>{{score}}</B></td>
+<td>song name:   <B>{{song_name}}</B> </td>
+<td>song url:    <B>{{song_url}}</B></td>
 <td><a href='/del/{{player_id}}'>Delete</a></td>
 </tr>
 {% endfor %}
