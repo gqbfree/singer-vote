@@ -103,7 +103,13 @@ def singervote_user_redirect(response_msg, err_msg, result):
                     r = 'True'
                 else:
                     r = 'False'
-            list_list.append([it.player, it.id, r, it.score, it.name, it.url, feed])
+            url = it.url
+            prefix = url[0:7]
+            if prefix.lower() == 'http://':
+                url = url[7:]
+            if not url.startswith('www.'):
+                url = 'www.'+url
+            list_list.append([it.player, it.id, r, it.score, it.name, url, feed])
             counter += 1
             if counter % 7 == 0:
                 feed = 'True'
