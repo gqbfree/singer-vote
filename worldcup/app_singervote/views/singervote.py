@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
 from app_dbop.models import vote_display, vote_rank, vote_admin
 from wcproc import *
