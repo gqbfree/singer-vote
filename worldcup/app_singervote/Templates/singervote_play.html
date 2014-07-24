@@ -1,0 +1,12 @@
+{% extends "singervote_base.html"  %}
+{% block content %}
+{%load static%}
+
+<form id='guess_form' action='.' method='POST'>
+<div id="container">
+	<div id="header" style="font-family:Times New Rome"><center><br><h1>{{player}} : {{song_name}}</h1></center></div>
+<div id="maincontent">
+<div id="content">
+<br>
+<center><embed height="400px" width="300px" name="gPlayer" src="{%get_static_prefix%}songs/{{song_name}}.mp3" type="application/x-mplayer3" ></embed></center>
+{% endblock %}

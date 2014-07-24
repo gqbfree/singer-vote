@@ -9,7 +9,7 @@
 <div id="content">
 <br>
 
-
+<embed height="400px" width="300px" name="gPlayer" src="{%get_static_prefix%}images/1.mp3" type="application/x-mplayer3" ></embed>
 <table cellpadding="0" cellspacing="0" border="0" align="center">
 	<tr>
 {% for player, player_id, value, score, song_name, song_url, feed in list_list %}
@@ -35,7 +35,7 @@
 &nbsp;<input type='checkbox' style="margin:5 0 2 0" name='player_id' value='{{player_id}}' {%ifequal value 'True'%}checked='checked'{%endifequal%}/>&nbsp;&nbsp;&nbsp; Vote Total: {{score}}
                     </td>
                 	<td width="32" bgcolor="#FFFFFF" align="center">
-						<a href='/play/{{player_id}}' target='_blank'><img border="0" src="{% get_static_prefix %}images/Play.png"></a>
+						<a href='//{{song_url}}' target='_blank'><img src="{% get_static_prefix %}images/Play.png"></a>
                     </td>
                 </tr>
             </table>

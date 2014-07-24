@@ -4,6 +4,18 @@ from app_dbop.models import vote_display, vote_rank, vote_admin
 from wcproc import *
 import os,re,datetime
 
+def singervote_play(reqeust, player_id):
+    q = vote_rank.objects.filter(id=player_id)
+    list_dic = {}
+    if q:
+        for it in q:
+            url = it.url
+            name= it.name
+            player = it.player
+            list_dic = {'player':it.player, 'song_name':it.name}
+    return render_to_response('singervote_play.html', list_dic)
+
+
 def singervote_set_anynomous(request, value):
     q = vote_admin.objects.all()
     if q:
