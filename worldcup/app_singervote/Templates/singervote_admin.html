@@ -12,8 +12,8 @@
 <div id="header"><center><br><h1>Welcome! Please add the song information!</h1></center></div>
 <div id="maincontent">
 <div id="content">
-<br><br>
-<table  border=0 cellpadding=2 cellspacing=0>
+	<br><br>
+<table align="center" border=0 cellpadding=2 cellspacing=0 width="900">
 <tr><td width='50'>&nbsp;</td>
 {% ifequal anynomous 1 %}
 <td colspan='3' >Notice: Current is Anynomous status ---- <a href='/anynomous/0'>Set Real Name In Vote Page</a></td>
@@ -33,15 +33,25 @@
 		</table>
 	</td>
 </tr></table>
-<table cellpadding="0" cellspacing="1" border="0">
-<tr><td height='30' colspan='8'></td></tr>
+<table cellpadding="0" cellspacing="1" border="0" width="900" align="center">	
+	<tr><td height='30' colspan='8'></td></tr>
+	<tr bgcolor="#e0ddc0">
+		<td height="28"></td>
+		<td></td>
+		<td><B><font color="#775533">Singer</font></B></td>
+		<td>&nbsp;&nbsp;<B><font color="#775533">Score</font></B></td>
+		<td>&nbsp;</td>
+		<td><B><font color="#775533">Song Name</font></B></td>
+		<td><B><font color="#775533">URL</font></B></td>
+	</tr>
 {% for player_id, player, score, song_name, song_url in list_list %}
 <tr><td width="50"></td><td>
 <img src='{% get_static_prefix %}images/Dot_orange.png' /></td>
-<td width="165">player name: <B>{{player}}</B></td><td bgcolor="#ead0c3" width="60">&nbsp; score:<B>{{score}}</B></td>
-<td width="265"><B><font color="#775533">&nbsp;&nbsp;song name:</font></B>   <B>{{song_name}}</B> </td>
-<td>song url:    <B>{{song_url}}</B></td>
-<td><a href='/del/{{player_id}}'>Delete</a></td>
+<td width="95"><B>{{player}}</B></td>
+<td bgcolor="#ead0c3" width="60">&nbsp; score:<B>{{score}}</B></td>
+<td width="60" align="center"><a href='/del/{{player_id}}'>Delete</a></td>
+<td width="265"><B>{{song_name}}</B> </td>
+<td><B>{{song_url}}</B></td>
 </tr>
 {% endfor %}
 <tr>

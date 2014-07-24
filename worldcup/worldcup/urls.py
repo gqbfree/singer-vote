@@ -29,3 +29,6 @@ urlpatterns = patterns('',
     (r'^play/(.+)/', singervote_play),
 #    (r'^test/.+)/', worldcup_test),
 )
+
+#from django.conf import settings if settings.DEBUG is False:
+#    urlpatterns += patterns('', url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.STATIC_ROOT,}),)
