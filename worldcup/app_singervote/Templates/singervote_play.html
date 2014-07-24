@@ -4,7 +4,7 @@
 
 <form id='guess_form' action='.' method='POST'>
 <div id="container">
-	<div id="header" style="font-family:Times New Rome"><center><br><h1>{{player}} : {{song_name}}</h1></center></div>
+	<div id="header" style="font-family:Times New Rome"><center><br><h1>{% ifequal anynomous 0 %}{{player}} :{%endifequal%} {{song_name}}</h1></center></div>
 <div id="maincontent">
 <div id="content">
 <br>

@@ -6,13 +6,14 @@ import os,re,datetime
 
 def singervote_play(reqeust, player_id):
     q = vote_rank.objects.filter(id=player_id)
+    anynomous = singervote_get_anynomous()
     list_dic = {}
     if q:
         for it in q:
             url = it.url
             name= it.name
             player = it.player
-            list_dic = {'player':it.player, 'song_name':it.name}
+            list_dic = {'player':it.player, 'song_name':it.name, 'anynomous':anynomous}
     return render_to_response('singervote_play.html', list_dic)
 
 
@@ -58,21 +59,24 @@ def singervote_player_del(request, player_id):
             it.del_flag = 1
             it.save()
     return singervote_admin_redirect('') 
-        
+       
+ 
+def singervote_get_anynomous():
+    q = vote_admin.objects.all()
+    if q:
+        for it in q:
+            return it.anynomous
+    return 1
+    
 
 def singervote_admin_redirect(err_msg):
     list_list = []
-    anynomous = 1
+    anynomous = singervote_get_anynomous()
     q = vote_rank.objects.filter(del_flag=0).order_by('-score')                
     if q:
         for it in q:
             list_list.append([it.id, it.player, it.score, it.name, it.url])    
 
-    q = vote_admin.objects.all()
-    if q:
-        for it in q:
-            anynomous = it.anynomous
-    
     list_dic = {"list_list":list_list, 'err_msg':err_msg, 'anynomous':anynomous}
     return render_to_response('singervote_admin.html', list_dic)
 
