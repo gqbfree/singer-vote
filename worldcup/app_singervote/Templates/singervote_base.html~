@@ -7,12 +7,7 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href='{% get_static_prefix %}CSS/singer.css' />
 
-<script language="javascript">
-function playit(player_id)
-{
-    window.open('/play/'+player_id, null, 'height=550, width=400, top='+(screen.height-700)/2+', left='+(screen.width-200)/2+', toolbar=no, menubar=0, scrollbars=no, location=no, status=no');
-}
-</script>
+</style>
 <body bgcolor="#99d3e0">
 {% block content %}{% endblock %}
 
