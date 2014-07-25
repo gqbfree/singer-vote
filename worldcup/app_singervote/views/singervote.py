@@ -108,7 +108,9 @@ def singervote_user_validate(username):
 def singervote_user_redirect(response_msg, err_msg, result):
     list_list = []
     feed    = 'False'
-    r       = 'False' 
+    feed_1  = 'False'
+    r       = 'False'
+    enter   = 7 
     counter = 0
 
     q = vote_rank.objects.filter(del_flag=0).order_by('id')
@@ -125,9 +127,13 @@ def singervote_user_redirect(response_msg, err_msg, result):
                 url = url[7:]
             if not url.startswith('www.'):
                 url = 'www.'+url
-            list_list.append([it.player, it.id, r, it.score, it.name, url, feed])
+            list_list.append([it.player, it.id, r, it.score, it.name, url, feed, feed_1])
             counter += 1
-            if counter % 7 == 0:
+            if counter % 5 == 0:
+                feed_1 = 'True'
+            else:
+                feed_1 = 'False'
+            if counter % 6 == 0:
                 feed = 'True'
             else:
                 feed = 'False'

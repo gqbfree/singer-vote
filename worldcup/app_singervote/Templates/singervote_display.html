@@ -5,17 +5,18 @@
 
 <form id='guess_form' action='.' method='POST'>	
 <div id="container">
-<div id="header" style="font-family:Times New Rome"><center><br><h1>Welcome! Please vote your favorite singer!</h1></center></div>
+<div id="header"><center><br><h1>Welcome! Please vote your favorite singer!</h1></center></div>
 <div id="maincontent">
 <div id="content">
 <br>
-
+<br>
 <table cellpadding="0" cellspacing="0" border="0" align="center">
-	<tr>
-{% for player, player_id, value, score, song_name, song_url, feed in list_list %}
+<tr>
+{% for player, player_id, value, score, song_name, song_url, feed, feed_1 in list_list %}
 {% ifequal feed 'True' %}</tr><tr><td height="40">&nbsp;</td></tr><tr>{% endifequal %}
-    	<td>
-        	<table width="175" cellpadding="0" cellspacing="1" border="0" bgcolor="#D1D1D1">
+		<td width="25" colspan="2">&nbsp;</td>
+		<td>
+        	<table width="175" cellpadding="0" cellspacing="1" border="0" bgcolor="#D0D0D0">
             	<tr>
 					<td colspan="2" height="175">
 						{% ifequal anynomous 0 %}
@@ -27,12 +28,12 @@
                 </tr>
             	<tr>
                 	<td colspan="2" height="40" bgcolor="#FFFFFF" style="line-height:125%; margin-top:4px;">
-						&nbsp;&nbsp;<b>{{song_name}}</b>
+						&nbsp;&nbsp;<font color="#454545"><b>{{song_name}}</b></font>
                     </td>
                 </tr>
             	<tr>
                 	<td width="143" height="30" bgcolor="#FFFFFF" valign="middle">
-&nbsp;<input type='checkbox' style="margin:5 0 2 0" name='player_id' value='{{player_id}}' {%ifequal value 'True'%}checked='checked'{%endifequal%}/>&nbsp;&nbsp;&nbsp; Vote Total: {{score}}
+						&nbsp;<input type='checkbox' style="margin:5 0 2 0" name='player_id' value='{{player_id}}' {%ifequal value 'True'%}checked='checked'{%endifequal%}/>&nbsp;&nbsp;&nbsp;<font color="#454545"> Vote Total: {{score}}</font>
                     </td>
                 	<td width="32" bgcolor="#FFFFFF" align="center">
 						<a href= "javascript:playit({{player_id}});"><img border="0" src="{% get_static_prefix %}images/Play.png"></a>
@@ -40,11 +41,11 @@
                 </tr>
             </table>
         </td>
-        <td width="50" colspan="2">&nbsp;</td>
+        <td width="25" colspan="2">&nbsp;</td>
     {%endfor%}
     </tr>
     <tr>
-<td colspan='13' height='150' align='bottom'>
+<td colspan='18' height='150' align='center'>
 Please input your Sonicwall English Name:
 <input type='text' name='username' style="width=2px;" value='{{username}}'/>
 <input type='submit' name='Submit' value='submit'/>
