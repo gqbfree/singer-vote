@@ -44,9 +44,10 @@ class vote_rank(models.Model):
 
 class vote_admin(models.Model):
     anynomous = models.IntegerField(default=1)
+    ranksort  = models.IntegerField(default=0)
 
     def __str__(self):
-        return '%s' % (self.anynomous)
+        return '%s %s' % (self.anynomous, self.ranksort)
 
 
 

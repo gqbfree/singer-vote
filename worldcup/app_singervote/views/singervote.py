@@ -16,6 +16,21 @@ def singervote_play(reqeust, player_id):
             list_dic = {'player':it.player, 'song_name':it.name, 'anynomous':anynomous}
     return render_to_response('singervote_play.html', list_dic)
 
+def singervote_set_ranksort(request, value):
+    q = vote_admin.objects.all()
+    if q:
+        for it in q:
+            if value == '0':
+                it.ranksort = 0 
+            else:
+                it.ranksort = 1
+            it.save()
+    else:
+        q = vote_admin(ranksort = 0)
+        q.save()
+    err_msg = "set successfully!"
+    return singervote_admin_redirect(err_msg)
+
 
 def singervote_set_anynomous(request, value):
     q = vote_admin.objects.all()
@@ -71,13 +86,20 @@ def singervote_get_anynomous():
 
 def singervote_admin_redirect(err_msg):
     list_list = []
-    anynomous = singervote_get_anynomous()
+    anynomous = 1
+    ranksort  = 0
+    q = vote_admin.objects.all()
+    if q:
+        for it in q:
+            anynomous = it.anynomous
+            ranksort  = it.ranksort
+        
     q = vote_rank.objects.filter(del_flag=0).order_by('-score')                
     if q:
         for it in q:
             list_list.append([it.id, it.player, it.score, it.name, it.url])    
 
-    list_dic = {"list_list":list_list, 'err_msg':err_msg, 'anynomous':anynomous}
+    list_dic = {"list_list":list_list, 'err_msg':err_msg, 'anynomous':anynomous, 'ranksort':ranksort}
     return render_to_response('singervote_admin.html', list_dic)
 
 
@@ -112,7 +134,19 @@ def singervote_user_redirect(response_msg, err_msg, result):
     enter   = 7 
     counter = 0
 
-    q = vote_rank.objects.filter(del_flag=0).order_by('id')
+    anynomous = 1
+    ranksort  = 0
+    q = vote_admin.objects.all()
+    if q:
+        for it in q:
+            anynomous = it.anynomous
+            ranksort  = it.ranksort
+
+    if ranksort == 0:   
+        q = vote_rank.objects.filter(del_flag=0).order_by('id')
+    else:
+        q = vote_rank.objects.filter(del_flag=0).order_by('-score')
+    
     if q:
         for it in q:
             if result:
@@ -132,12 +166,6 @@ def singervote_user_redirect(response_msg, err_msg, result):
                 feed = 'True'
             else:
                 feed = 'False'
-    
-    anynomous = 1
-    q = vote_admin.objects.all()
-    if q:
-        for it in q:
-            anynomous = it.anynomous
     
     list_dic = {'list_list':list_list, 'response_msg':response_msg, 'err_msg':err_msg, 'anynomous':anynomous} 
     return render_to_response('singervote_display.html', list_dic)

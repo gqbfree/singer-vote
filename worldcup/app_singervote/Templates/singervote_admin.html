@@ -16,17 +16,23 @@
 <table align="center" border=0 cellpadding=2 cellspacing=0 width="900">
 <tr>
 {% ifequal anynomous 1 %}
-<td colspan='3' >Notice: Current is Anynomous status ---- <a href='/anynomous/0'>Set Real Name In Vote Page</a></td>
+<td colspan='3' ><b>Setting 1: Click to display player's name in vote page ---- <a href='/anynomous/0'>Display player's name In Vote Page</a></b></td>
 {% else %}
-<td colspan='3' >Notice: Current is Real Name status ---- <a href='/anynomous/1'>Set Anynomous In Vote Page</a></td>
+<td colspan='3' ><b>Setting 1: Click to hide player's name in vote page    ---- <a href='/anynomous/1'>Hide player's name In Vote Page</a></b></td>
+{% endifequal%}
+</tr><tr>
+{% ifequal ranksort 0 %}
+<td colspan='3' ><b>Setting 2: Click to Sort Rank in vote page             ---- <a href='/ranksort/1'>Sort Rank</a></b></td>
+{% else %} 
+<td colspan='3' ><b>Setting 2: Click to Non-Sort rank in vote page         ---- <a href='/ranksort/0'>Non-Sort Rank</a></b></td>
 {% endifequal%}
 <td><center><h3><a href='/vote/'>return vote page</a></h3></center></td>
 </tr>
 <tr>
 	<td colspan="3">
 		<table cellpadding="0" cellspacing="0" border="0">
-			<tr><td width="85" height="25">player name:</td><td> <input type='text' name='add_player_name' value='' maxlength='75'></td></tr>
-			<tr><td width="85" height="25">song name:</td><td> <input type='text' name='add_song_name' value='' maxlength='75'></td></tr>
+			<tr><td width="85" height="25"><b>player name:</b></td><td> <input type='text' name='add_player_name' value='' maxlength='75'></td></tr>
+			<tr><td width="85" height="25"><b>song name:</b></td><td> <input type='text' name='add_song_name' value='' maxlength='75'></td></tr>
 			<tr><td>&nbsp;</td><td height="45" valign='middle'><input type='submit' name='Submit' value='Add a new player'/></td></tr>
 		</table>
 	</td>
