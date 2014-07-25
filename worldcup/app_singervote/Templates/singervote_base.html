@@ -25,6 +25,25 @@ function voteit(id)
         document.getElementById("img_"+id).src = "{% get_static_prefix %}images/NoFavor.png";
     }
 }
+
+function onMouse(obj)
+{
+    obj.style.backgroundColor="green";
+}
+
+function outMouse(obj)
+{
+    obj.style.backgroundColor="";
+}
+
+function delPlayer()
+{
+    if(!confirm("Are you sure?"))
+    {
+        window.event.returnValue = false;
+    }
+}
+
 </script>
 <body background='{% get_static_prefix %}images/homepageBg.png'>
 {% block content %}{% endblock %}
