@@ -8,11 +8,11 @@
 <div id="header"><center><br><h1>Welcome! Please vote your favorite singer!</h1></center></div>
 <div id="maincontent">
 <div id="content">
-<br>
+<center><h2><font color='red'>{{err_msg}}{{response_msg}}</font></h2></center>
 <br>
 <table cellpadding="0" cellspacing="0" border="0" align="center">
 <tr>
-{% for player, player_id, value, score, song_name, song_url, feed, feed_1 in list_list %}
+{% for player, player_id, value, score, song_name, song_url, feed in list_list %}
 {% ifequal feed 'True' %}</tr><tr><td height="40">&nbsp;</td></tr><tr>{% endifequal %}
 		<td width="25" colspan="2">&nbsp;</td>
 		<td>
@@ -33,7 +33,19 @@
                 </tr>
             	<tr>
                 	<td width="143" height="30" bgcolor="#FFFFFF" valign="middle">
-						&nbsp;<input type='checkbox' style="margin:5 0 2 0" name='player_id' value='{{player_id}}' {%ifequal value 'True'%}checked='checked'{%endifequal%}/>&nbsp;&nbsp;&nbsp;<font color="#454545"> Vote Total: {{score}}</font>
+						&nbsp;<input class='' type='checkbox'  name='player_id' id='{{player_id}}' value='{{player_id}}'
+                        
+                        {% ifequal value 'True'%} checked="checked" {% endifequal %}
+                        
+                    />
+                    <label for="{{player_id}}" onclick="javascript:voteit({{player_id}});">
+                        {% ifequal value 'True'%}
+                        <img id="img_{{player_id}}" src='{% get_static_prefix %}images/MyFavor.png' />
+                        {% else %}
+                        <img id="img_{{player_id}}" src='{% get_static_prefix %}images/NoFavor.png' />
+                        {% endifequal %}
+                    </label>
+                    &nbsp;&nbsp;&nbsp;<font color="#454545"> Vote Total: {{score}}</font>
                     </td>
                 	<td width="32" bgcolor="#FFFFFF" align="center">
 						<a href= "javascript:playit({{player_id}});"><img border="0" src="{% get_static_prefix %}images/Play.png"></a>
@@ -50,8 +62,6 @@ Please input your Sonicwall English Name:
 <input type='text' name='username' style="width=2px;" value='{{username}}'/>
 <input type='submit' name='Submit' value='submit'/>
 <p>
-<font color='red'>{{err_msg}}</font>
-{{response_msg}}
 <p>
 <input type="hidden" name="isNotFirst" value="1"/>
 {% if admin %}
