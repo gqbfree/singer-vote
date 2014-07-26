@@ -16,7 +16,7 @@ function playit(player_id)
 
 function voteit(id)
 {
-    if (document.getElementById(id).checked == false)
+    if (document.getElementById(id).checked == true)
     {
         document.getElementById("img_"+id).src = "{% get_static_prefix %}images/MyFavor.png";
     }
