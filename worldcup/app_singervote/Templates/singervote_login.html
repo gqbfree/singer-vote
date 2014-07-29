@@ -1,0 +1,33 @@
+{% extends "singervote_base.html"  %}
+{% block content %}
+{%load static%}
+
+<p></p>
+<p></p>
+<p></p>
+<form id='guess_form' action='/login/' method='POST'>
+
+
+<div id="container" bgcolor="#bfe7f1">
+<div id="header"><center><br><h1>Welcome! Please add the song information!</h1></center></div>
+<div id="content">
+	<br><br>
+<table align="center" border=0 cellpadding=2 cellspacing=0 width="900">
+<tr>
+<td><center><h3><a href='/vote/'>return vote page</a></h3></center></td>
+</tr>
+</table>
+<br><br>
+<table align="center" border=0 cellpadding=2 cellspacing=0 width="400">
+<tr>
+            <td width="50"><b>password:</b></td><td width="50"> <input type='password' name='password' value='' maxlength='75'></td>
+            <td>&nbsp;</td><td height="45" valign='middle'><input type='submit' name='Submit' value='login'/></td>
+			{%ifnotequal err_msgi ''%}
+            <tr><td>&nbsp;</td><td height="45" valign='middle'>{{err_msg}}</td></tr>
+			{%endifnotequal%}
+</tr></table>
+
+</div>
+</div>
+</form>
+{% endblock %}

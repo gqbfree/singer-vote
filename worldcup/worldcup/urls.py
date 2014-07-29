@@ -27,6 +27,8 @@ urlpatterns = patterns('',
     (r'^add/', singervote_player_add),
     (r'^vote/', singervote_display),
     (r'^admin/', singervote_admin_proc),
+    (r'^login/', singervote_admin_login),
+    (r'^logout/', singervote_admin_logout),
     (r'^play/(.+)/', singervote_play),
 #    (r'^test/.+)/', worldcup_test),
 )

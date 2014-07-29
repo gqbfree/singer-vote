@@ -1,8 +1,33 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
+from django.http import HttpResponse, HttpResponseRedirect
 from app_dbop.models import vote_display, vote_rank, vote_admin
 from wcproc import *
 import os,re,datetime
+
+password = '9527'
+
+def singervote_admin_validate(request):
+    pwd = request.COOKIES.get('pwd','')
+    if pwd != password:
+        return False
+    else:
+        return True
+
+def singervote_admin_logout(request):
+    response = HttpResponse('logout!')
+    response.delete_cookie('pwd')
+    return HttpResponseRedirect('/login/')    
+
+def singervote_admin_login(request):
+    pwd = request.POST.get('password', '')
+    if pwd == password:
+        response = HttpResponseRedirect('/admin/')
+        response.set_cookie('pwd', pwd, 3600)
+        return response
+    else:
+        return render_to_response('singervote_login.html', {'err_msg':'password is wrong!'} )        
+
 
 def singervote_play(reqeust, player_id):
     q = vote_rank.objects.filter(id=player_id)
@@ -48,6 +73,9 @@ def singervote_set_anynomous(request, value):
     return singervote_admin_redirect(err_msg)
 
 def singervote_player_add(request):
+    if singervote_admin_validate(request) == False:    
+        return HttpResponseRedirect('/login/')    
+
     player_name = request.POST.get('add_player_name', '')
     url  = request.POST.get('add_song_url', '')
     name = request.POST.get('add_song_name', '')        
@@ -66,7 +94,12 @@ def singervote_player_add(request):
     err_msg = 'Operation successfully!' 
     return singervote_admin_redirect(err_msg)
 
+
 def singervote_player_del(request, player_id):
+    if singervote_admin_validate(request) == False:    
+        return HttpResponseRedirect('/login/')    
+
+    singervote_admin_validate(request)    
     del_id = int(player_id)
     q = vote_rank.objects.filter(id=del_id)
     if q:
@@ -104,15 +137,12 @@ def singervote_admin_redirect(err_msg):
 
 
 def singervote_admin_proc(request):
-    isNotFirst = request.POST.get("isNotFirst", '')
-    password = request.POST.get("password", '')
+    if singervote_admin_validate(request) == False:    
+        return HttpResponseRedirect('/login/')    
 
+    isNotFirst = request.POST.get("isNotFirst", '')
     if isNotFirst != '1':
         return singervote_admin_redirect('')
-    if password != '9527':
-        err_msg = 'The password is incorrect!'
-        return singervote_admin_redirect(err_msg)
-
     return singervote_admin_redirect('')
 
 

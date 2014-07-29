@@ -20,15 +20,16 @@
 {% else %}
 <td colspan='3' ><b>Setting 1: Click to hide player's name in vote page    ---- <a href='/anynomous/1'>Hide player's name In Vote Page</a></b></td>
 {% endifequal%}
-</tr><tr>
+<td><center><h3><a href='/vote/'>return vote page</a></h3></center></td>
+<td><center><h3><a href='/logout/'>logout</a></h3></center></td>
+</td><tr>
 {% ifequal ranksort 0 %}
 <td colspan='3' ><b>Setting 2: Click to Sort Rank in vote page             ---- <a href='/ranksort/1'>Sort Rank</a></b></td>
 {% else %} 
 <td colspan='3' ><b>Setting 2: Click to Non-Sort rank in vote page         ---- <a href='/ranksort/0'>Non-Sort Rank</a></b></td>
 {% endifequal%}
-<td><center><h3><a href='/vote/'>return vote page</a></h3></center></td>
-</tr>
-<tr>
+</tr><tr height="30">
+<td colspan='3'></td><tr>
 	<td colspan="3">
 		<table cellpadding="0" cellspacing="0" border="0">
 			<tr><td width="85" height="25"><b>player name:</b></td><td> <input type='text' name='add_player_name' value='' maxlength='75'></td></tr>
