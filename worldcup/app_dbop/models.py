@@ -23,8 +23,6 @@ class Auth(models.Model):
     password = models.CharField(max_length=16)
 
 
-
-
 class vote_display(models.Model):
     user = models.CharField(max_length=128,primary_key=True)
     vote = models.CharField(max_length=128)
@@ -45,9 +43,10 @@ class vote_rank(models.Model):
 class vote_admin(models.Model):
     anynomous = models.IntegerField(default=1)
     ranksort  = models.IntegerField(default=0)
+    enablevote= models.IntegerField(default=0)
 
     def __str__(self):
-        return '%s %s' % (self.anynomous, self.ranksort)
+        return '%s %s %s' % (self.anynomous, self.ranksort, self.enablevote)
 
 
 

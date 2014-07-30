@@ -24,9 +24,15 @@
 <td><center><h3><a href='/logout/'>logout</a></h3></center></td>
 </td><tr>
 {% ifequal ranksort 0 %}
-<td colspan='3' ><b>Setting 2: Click to Sort Rank in vote page             ---- <a href='/ranksort/1'>Sort Rank</a></b></td>
+<td colspan='3' ><b>Setting 2: Click to Sort Rank in vote page             ---- <a href='/ranksort/1'>Sort Rank By Score</a></b></td>
 {% else %} 
 <td colspan='3' ><b>Setting 2: Click to Non-Sort rank in vote page         ---- <a href='/ranksort/0'>Non-Sort Rank</a></b></td>
+{% endifequal%}
+</tr><tr>
+{% ifequal enablevote 0 %}
+<td colspan='3' ><b>Setting 3: Enable vote function             ---- <a href='/enablevote/1'>Enable Vote</a></b></td>
+{% else %} 
+<td colspan='3' ><b>Setting 3: Disable vote function            ---- <a href='/enablevote/0'>Disable Vote</a></b></td>
 {% endifequal%}
 </tr><tr height="30">
 <td colspan='3'></td><tr>

@@ -56,11 +56,16 @@
     </tr></table>
 <p><p><p><br><br>
 <center>
+{% ifequal enablevote 0 %}
+<B><h2>Vote not start now, please wait and enjoy the music......</h2></B>
+{% else %}
 Please input your Sonicwall English Name:
 <input type='text' name='username' style="width=2px;" value='{{username}}'/>
 <input type='submit' name='Submit' value='submit'/>
 <input type="hidden" name="isNotFirst" value="1"/>
-<p><br>
+<p>
+{% endifequal %}
+<br><br><br>
 </center>
 </form>
 {% endblock %}

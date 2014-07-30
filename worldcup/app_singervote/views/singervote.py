@@ -74,6 +74,21 @@ def singervote_set_anynomous(request, value):
     err_msg = "Set successfully!"
     return singervote_admin_redirect(err_msg)
 
+def singervote_set_enablevote(request, value):
+    q = vote_admin.objects.all()
+    if q:
+        for it in q:
+            if value == '1':
+                it.enablevote= 1
+            else:
+                it.enablevote= 0
+            it.save()
+    else:
+        q = vote_admin(enablevote= 0)
+        q.save() 
+    err_msg = "Set successfully!"
+    return singervote_admin_redirect(err_msg)
+
 def singervote_player_add(request):
     if singervote_admin_validate(request) == False:    
         return HttpResponseRedirect('/login/')    
@@ -128,13 +143,14 @@ def singervote_admin_redirect(err_msg):
         for it in q:
             anynomous = it.anynomous
             ranksort  = it.ranksort
-        
+            enablevote= it.enablevote
+    
     q = vote_rank.objects.filter(del_flag=0).order_by('-score')                
     if q:
         for it in q:
             list_list.append([it.id, it.player, it.score, it.name, it.url])    
 
-    list_dic = {"list_list":list_list, 'err_msg':err_msg, 'anynomous':anynomous, 'ranksort':ranksort}
+    list_dic = {"list_list":list_list, 'err_msg':err_msg, 'anynomous':anynomous, 'ranksort':ranksort, 'enablevote':enablevote}
     return render_to_response('singervote_admin.html', list_dic)
 
 
@@ -173,6 +189,7 @@ def singervote_user_redirect(response_msg, err_msg, result):
         for it in q:
             anynomous = it.anynomous
             ranksort  = it.ranksort
+            enablevote= it.enablevote
 
     if ranksort == 0:   
         q = vote_rank.objects.filter(del_flag=0).order_by('id')
@@ -199,7 +216,7 @@ def singervote_user_redirect(response_msg, err_msg, result):
             else:
                 feed = 'False'
     
-    list_dic = {'list_list':list_list, 'response_msg':response_msg, 'err_msg':err_msg, 'anynomous':anynomous} 
+    list_dic = {'list_list':list_list, 'response_msg':response_msg, 'err_msg':err_msg, 'anynomous':anynomous, 'enablevote':enablevote} 
     return render_to_response('singervote_display.html', list_dic)
  
 
