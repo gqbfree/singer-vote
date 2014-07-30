@@ -14,10 +14,12 @@ def singervote_admin_validate(request):
     else:
         return True
 
+
 def singervote_admin_logout(request):
     response = HttpResponse('logout!')
     response.delete_cookie('pwd')
     return HttpResponseRedirect('/login/')    
+
 
 def singervote_admin_login(request):
     pwd = request.POST.get('password', '')
