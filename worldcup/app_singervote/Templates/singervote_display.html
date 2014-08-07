@@ -14,11 +14,11 @@
 <tr>
 {% for player, player_id, value, score, song_name, song_url, feed in list_list %}
 {% ifequal feed 'True' %}</tr><tr><td height="40">&nbsp;</td></tr><tr>{% endifequal %}
-		<td width="25" colspan="2">&nbsp;</td>
+		<td width="25">&nbsp;</td>
 		<td>
         	<table width="175" cellpadding="0" cellspacing="1" border="0" bgcolor="#D0D0D0">
             	<tr>
-					<td colspan="3" height="175">
+					<td colspan="2" height="175">
 						{% ifequal anynomous 0 %}
 						<img width="175" style="vertical-align:bottom" src='{% get_static_prefix %}images/{{player}}.png' /><center><B>{{player}}</B></center>
 					{% else %}
@@ -27,7 +27,7 @@
 					</td>
                 </tr>
             	<tr>
-                	<td colspan="3" height="40" bgcolor="#FFFFFF" style="line-height:125%; margin-top:4px;">
+                	<td colspan="2" height="35" bgcolor="#FFFFFF" style="line-height:125%; margin-top:4px;">
 						&nbsp;&nbsp;<font color="#454545"><b>{{song_name}}</b></font>
                     </td>
                 </tr>
@@ -45,13 +45,13 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <font color="#454545"> Vote Total: <font color="#dd4a28"><b>{{score}}</b></font></font>
                     </td>
-                	<td width="32" bgcolor="#FFFFFF" align="center">
+                	<td width="28" bgcolor="#FFFFFF" align="center">
 						<a href= "javascript:playit({{player_id}});"><img border="0" align="absmiddle" src="{% get_static_prefix %}images/Play.png"></a>
                     </td>
                 </tr>
             </table>
         </td>
-        <td width="25" colspan="2">&nbsp;</td>
+        <td width="25">&nbsp;</td>
     {%endfor%}
     </tr></table>
 <p><p><p><br><br>
