@@ -246,8 +246,8 @@ def singervote_display(request):
         err_msg = 'Please chose at least 1 player!'
         return singervote_user_redirect('', err_msg, result)
 
-    if len(result) > 5:
-        err_msg = "You couldn't vote exceed 5 palyers!"
+    if len(result) > 10:
+        err_msg = "You couldn't vote exceed 10 palyers!"
         return singervote_user_redirect('', err_msg, result)
 
     q = vote_display.objects.filter(user=username)
