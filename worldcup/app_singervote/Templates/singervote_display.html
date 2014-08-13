@@ -5,11 +5,11 @@
 
 <form id='guess_form' action='.' method='POST'>	
 <div id="container">
-<div id="header"><center><br><h1>Welcome! Please vote your favorite singer!</h1></center></div>
+<div id="header"><center><br>
+		<h1>Please Vote your Favorite Singer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Voter:&nbsp;<b><font color="#d03a2e">{{tt}}</font></b></h1>  <h2><font color="#d03a2e">Sharing Area is opening!</font>&nbsp;&nbsp;<a href='/share/'> Go >></a></h2></center></div>
 <div id="maincontent">
 <div id="content">
-<center><h2><font color='#d03a2e'>{{err_msg}}{{response_msg}}</font></h2></center>
-<br>
+<br><br><br>
 <table cellpadding="0" cellspacing="0" border="0" align="center">
 <tr>
 {% for player, player_id, value, score, song_name, song_url, feed in list_list %}
@@ -54,7 +54,9 @@
         <td width="25">&nbsp;</td>
     {%endfor%}
     </tr></table>
-<p><p><p><br><br>
+<p><p><p><br>
+<center><h2><font color='#d03a2e'>{{err_msg}}{{response_msg}}</font></h2></center>
+<br>
 <center>
 {% ifequal enablevote 0 %}
 <B><h2>Vote not start now, please wait and enjoy the music......</h2></B>
@@ -63,6 +65,7 @@ Please input your Sonicwall English Name:
 <input type='text' name='username' style="width=2px;" value='{{username}}'/>
 <input type='submit' name='Submit' value='submit'/>
 <input type="hidden" name="isNotFirst" value="1"/>
+<input type="hidden" name="share_flag" value="0"/>
 <p>
 {% endifequal %}
 <br><br><br>

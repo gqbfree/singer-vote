@@ -5,7 +5,7 @@ from app_dbop.models import vote_display, vote_rank, vote_admin
 from wcproc import *
 import os,re,datetime
 
-password = '9527'
+password = 'grace!@#'
 
 def singervote_admin_validate(request):
     pwd = request.COOKIES.get('pwd','')
@@ -95,18 +95,19 @@ def singervote_player_add(request):
 
     player_name = request.POST.get('add_player_name', '')
     url  = request.POST.get('add_song_url', '')
-    name = request.POST.get('add_song_name', '')        
+    name = request.POST.get('add_song_name', '')
+    share= request.POST.get('add_song_share', '')        
     if player_name == '':
         err_msg = 'please input player name!'
         return singervote_admin_redirect(err_msg)
 
-    q = vote_rank.objects.filter(player=player_name, del_flag=0)
-    if q:
-        err_msg = 'The player existed already!'
-        return singervote_admin_redirect(err_msg)
+    if share == 'yes':
+        share_flag = 1 
     else:
-        q = vote_rank(player=player_name, name=name, url=url, score=0, del_flag=0)
-        q.save()
+        share_flag = 0 
+
+    q = vote_rank(player=player_name, name=name, url=url, score=0, del_flag=0, share_flag=share_flag)
+    q.save()
 
     err_msg = 'Operation successfully!' 
     return singervote_admin_redirect(err_msg)
@@ -148,7 +149,11 @@ def singervote_admin_redirect(err_msg):
     q = vote_rank.objects.filter(del_flag=0).order_by('-score')                
     if q:
         for it in q:
-            list_list.append([it.id, it.player, it.score, it.name, it.url])    
+            if it.share_flag == 1:
+                share = 'YES'
+            else:
+                share = 'NO'
+            list_list.append([it.id, it.player, it.score, it.name, it.url, share])    
 
     list_dic = {"list_list":list_list, 'err_msg':err_msg, 'anynomous':anynomous, 'ranksort':ranksort, 'enablevote':enablevote}
     return render_to_response('singervote_admin.html', list_dic)
@@ -158,6 +163,7 @@ def singervote_admin_proc(request):
     if singervote_admin_validate(request) == False:    
         return HttpResponseRedirect('/login/')    
 
+    ip = request.META['REMOTE_ADDR']
     isNotFirst = request.POST.get("isNotFirst", '')
     if isNotFirst != '1':
         return singervote_admin_redirect('')
@@ -175,7 +181,7 @@ def singervote_user_validate(username):
         return True
     return False 
 
-def singervote_user_redirect(response_msg, err_msg, result):
+def singervote_user_redirect(response_msg, err_msg, result, share):
     list_list = []
     feed    = 'False'
     r       = 'False'
@@ -192,9 +198,9 @@ def singervote_user_redirect(response_msg, err_msg, result):
             enablevote= it.enablevote
 
     if ranksort == 0:   
-        q = vote_rank.objects.filter(del_flag=0).order_by('id')
+        q = vote_rank.objects.filter(del_flag=0, share_flag=share).order_by('id')
     else:
-        q = vote_rank.objects.filter(del_flag=0).order_by('-score')
+        q = vote_rank.objects.filter(del_flag=0, share_flag=share).order_by('-score')
     
     if q:
         for it in q:
@@ -215,51 +221,62 @@ def singervote_user_redirect(response_msg, err_msg, result):
                 feed = 'True'
             else:
                 feed = 'False'
-    
-    list_dic = {'list_list':list_list, 'response_msg':response_msg, 'err_msg':err_msg, 'anynomous':anynomous, 'enablevote':enablevote} 
-    return render_to_response('singervote_display.html', list_dic)
- 
+  
+    tt = vote_display.objects.filter(share_flag=share).count()
+  
+    list_dic = {'list_list':list_list, 'response_msg':response_msg, 'err_msg':err_msg, 'anynomous':anynomous, 'enablevote':enablevote, 'tt':tt} 
+    if share == 0:
+        return render_to_response('singervote_display.html', list_dic)
+    else:
+        return render_to_response('singervote_share.html', list_dic)
 
-def singervote_display(request):
+def singervote_share(request):
+    return singervote_display(request,1)    
+
+def singervote_race(request):
+    return singervote_display(request,0)
+
+def singervote_display(request, share):
  
     isNotFirst = request.POST.get("isNotFirst", '')
     username   = request.POST.get("username", '')
     admin_key  = request.POST.get("admin_key", '')
     result     = request.POST.getlist('player_id', '')
-
+ 
     if isNotFirst == '':
-        return singervote_user_redirect('', '', '') 
+        return singervote_user_redirect('', '', '', share) 
 
     isAdmin = 0
     err_msg = '' 
     if isNotFirst == '1':
         if username == '':
             err_msg = 'Failed!!!  Please input your SonicWall English Name Firstly!(For example: Tom)'
-            return singervote_user_redirect('', err_msg, result)
+            return singervote_user_redirect('', err_msg, result, share)
 
     if isNotFirst == '1' and username != '':
         if singervote_user_validate(username) == False:
             err_msg = 'Your name is invalide, please check it......'
-            return singervote_user_redirect('', err_msg, result)
+            return singervote_user_redirect('', err_msg, result, share)
 
     if not result:
         err_msg = 'Please chose at least 1 player!'
-        return singervote_user_redirect('', err_msg, result)
+        return singervote_user_redirect('', err_msg, result, share)
 
     if len(result) > 10:
         err_msg = "You couldn't vote exceed 10 palyers!"
-        return singervote_user_redirect('', err_msg, result)
+        return singervote_user_redirect('', err_msg, result, share)
 
-    q = vote_display.objects.filter(user=username)
+    q = vote_display.objects.filter(user=username, share_flag=share)
     if q:
         err_msg = "You already voted....."
-        return singervote_user_redirect('', err_msg, result)
+        return singervote_user_redirect('', err_msg, result, share)
     else:
         vote = ''
+        ip = request.META['REMOTE_ADDR']
         for it in result:
             vote += it
             vote += ','
-        q = vote_display(user=username, vote=vote)
+        q = vote_display(user=username, vote=vote, ip=ip, share_flag=share)
         q.save()
 
     list_list = []
@@ -275,7 +292,7 @@ def singervote_display(request):
         else:
             err_msg = 'The player you chose is invalid!'
  
-    return singervote_user_redirect(response_msg, err_msg, result)
+    return singervote_user_redirect(response_msg, err_msg, result, share)
 
 
 

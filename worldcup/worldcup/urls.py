@@ -26,12 +26,12 @@ urlpatterns = patterns('',
     (r'^enablevote/(.+)/', singervote_set_enablevote),
     (r'^del/(.+)/', singervote_player_del),
     (r'^add/', singervote_player_add),
-    (r'^vote/', singervote_display),
+    (r'^vote/', singervote_race),
     (r'^admin/', singervote_admin_proc),
     (r'^login/', singervote_admin_login),
     (r'^logout/', singervote_admin_logout),
     (r'^play/(.+)/', singervote_play),
-#    (r'^test/.+)/', worldcup_test),
+    (r'^share/', singervote_share),
 )
 
 #from django.conf import settings if settings.DEBUG is False:
