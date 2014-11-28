@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from app_dbop.models import vote_display, vote_rank, vote_admin
 from wcproc import *
 import os,re,datetime
+import json
 
 password = 'grace!@#'
 
@@ -40,6 +41,8 @@ def singervote_play(reqeust, player_id):
             url = it.url
             name= it.name
             player = it.player
+            it.play_time += 1
+            it.save()
             list_dic = {'player':it.player, 'song_name':it.name, 'anynomous':anynomous}
     return render_to_response('singervote_play.html', list_dic)
 
@@ -181,6 +184,16 @@ def singervote_user_validate(username):
         return True
     return False 
 
+def douban_shanghai_rent():
+    rent_info = []
+    with open("/home/qingbo_gao/martin/scrapy/project/douban_rent/douban_data_utf8.json") as f:
+        for line in f.readlines():
+            j = json.loads(line)   
+            rent_info.append([j['title'], j['link'], j['desc']])
+    
+    return rent_info
+
+
 def singervote_user_redirect(response_msg, err_msg, result, share):
     list_list = []
     feed    = 'False'
@@ -215,7 +228,7 @@ def singervote_user_redirect(response_msg, err_msg, result, share):
                 url = url[7:]
             if not url.startswith('www.'):
                 url = 'www.'+url
-            list_list.append([it.player, it.id, r, it.score, it.name, url, feed])
+            list_list.append([it.player, it.id, r, it.score, it.name, url, it.play_time, feed])
             counter += 1
             if counter % 6 == 0:
                 feed = 'True'
@@ -223,8 +236,10 @@ def singervote_user_redirect(response_msg, err_msg, result, share):
                 feed = 'False'
   
     tt = vote_display.objects.filter(share_flag=share).count()
-  
-    list_dic = {'list_list':list_list, 'response_msg':response_msg, 'err_msg':err_msg, 'anynomous':anynomous, 'enablevote':enablevote, 'tt':tt} 
+    
+    rent_info = douban_shanghai_rent() 
+ 
+    list_dic = {'list_list':list_list, 'response_msg':response_msg, 'err_msg':err_msg, 'anynomous':anynomous, 'enablevote':enablevote, 'tt':tt, 'rent_info':rent_info} 
     if share == 0:
         return render_to_response('singervote_display.html', list_dic)
     else:

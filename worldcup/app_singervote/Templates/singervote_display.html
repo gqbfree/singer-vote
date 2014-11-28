@@ -1,34 +1,38 @@
 {% extends "singervote_base.html"  %}
+{% load static %}
 {% block content %}
-{%load static%}
-
 
 <form id='guess_form' action='.' method='POST'>	
 <div id="container">
-<div id="header"><center><br>
+<div id="header">
+<center><br>
 		<h1>Please Vote your Favorite Singer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total Voter:&nbsp;<b><font color="#d03a2e">{{tt}}</font></b></h1>  <h2><font color="#d03a2e">Sharing Area is opening!</font>&nbsp;&nbsp;<a href='/share/'> Go >></a></h2></center></div>
 <div id="maincontent">
 <div id="content">
 <br><br><br>
 <table cellpadding="0" cellspacing="0" border="0" align="center">
 <tr>
-{% for player, player_id, value, score, song_name, song_url, feed in list_list %}
+{% for player, player_id, value, score, song_name, song_url, play_time, feed in list_list %}
 {% ifequal feed 'True' %}</tr><tr><td height="40">&nbsp;</td></tr><tr>{% endifequal %}
 		<td width="25">&nbsp;</td>
 		<td>
         	<table width="175" cellpadding="0" cellspacing="1" border="0" bgcolor="#D0D0D0">
             	<tr>
-					<td colspan="2" height="175">
+					<td colspan="2" height="192" bgcolor="#E0E0E0">
 						{% ifequal anynomous 0 %}
-						<img width="175" style="vertical-align:bottom" src='{% get_static_prefix %}images/{{player}}.png' /><center><B>{{player}}</B></center>
+						<img width="175" style="vertical-align: top" src='{% get_static_prefix %}images/{{player}}.png' />
+                        <center><font color="#2fb2cf" size="+1"><B>{{player}}</B></font></center>
 					{% else %}
 						<img width="175" style="vertical-align:bottom" src='{% get_static_prefix %}images/{{player_id}}.png' />
 						{% endifequal %}
 					</td>
                 </tr>
             	<tr>
-                	<td colspan="2" height="32" bgcolor="#FFFFFF" style="line-height:125%; margin-top:4px;">
+                	<td height="32" bgcolor="#FFFFFF" style="line-height:125%; margin-top:4px;">
 						&nbsp;&nbsp;<font color="#454545"><b>{{song_name}}</b></font>
+                    </td>
+                	<td height="32" bgcolor="#FFFFFF" style="line-height:125%; margin-top:4px;">
+						&nbsp;&nbsp;<font color="#454545"><b>{{play_time}}</b></font>
                     </td>
                 </tr>
             	<tr>
@@ -59,7 +63,7 @@
 <br>
 <center>
 {% ifequal enablevote 0 %}
-<B><h2>Vote not start now, please wait and enjoy the music......</h2></B>
+<B><h2>Vote is completed, please enjoy the music......</h2></B>
 {% else %}
 Please input your Sonicwall English Name:
 <input type='text' name='username' style="width=2px;" value='{{username}}'/>
@@ -69,6 +73,13 @@ Please input your Sonicwall English Name:
 <p>
 {% endifequal %}
 <br><br><br>
+
+{%for title, link, desc in rent_info%}
+<h1>{{title}}</h1><br>
+<a herf = '{{link}}'>{{link}}</a><br>
+{{desc}}
+{%endfor%}
+
 </center>
 </form>
 {% endblock %}
