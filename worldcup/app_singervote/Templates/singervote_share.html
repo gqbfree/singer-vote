@@ -1,6 +1,7 @@
 {% extends "singervote_base.html"  %}
-{% block content %}
 {%load static%}
+<body bgcolor="#a8af7f" background='{% get_static_prefix %}images/bg1.png'>
+{% block content %}
 
 
 <form id='guess_form' action='.' method='POST'>	
@@ -19,9 +20,10 @@
 		<td>
         	<table width="175" cellpadding="0" cellspacing="1" border="0" bgcolor="#D0D0D0">
             	<tr>
-					<td colspan="2" height="175">
+					<td colspan="2" height="175" bgcolor="#E0E0E0">
 						{% ifequal anynomous 0 %}
-						<img width="175" style="vertical-align:bottom" src='{% get_static_prefix %}images/{{player}}.png' /><center><B>{{player}}</B></center>
+						<img width="175" style="vertical-align:bottom" src='{% get_static_prefix %}images/{{player}}.png' />
+                        <center><font color="#2fb2cf" size="+1"><B>{{player}}</B></font></center>
 					{% else %}
 						<img width="175" style="vertical-align:bottom" src='{% get_static_prefix %}images/{{player_id}}.png' />
 						{% endifequal %}
@@ -73,3 +75,4 @@ Please input your Sonicwall English Name:
 </center>
 </form>
 {% endblock %}
+</body>

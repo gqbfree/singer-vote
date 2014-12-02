@@ -1,0 +1,21 @@
+{% extends "doubanrent_base.html"  %}
+{% load static %}
+{% block content %}
+
+<form id='guess_form' action='.' method='POST'>	
+<div id="content">
+<table cellpadding='1' width='70%' align='center'>
+{%for title, link, desc in rent_info%}
+<tr><td><a href='{{link}}'><h3>{{title}}</h3></a></td><tr>
+<tr><td>
+{{desc}}
+</td></tr>
+{%endfor%}
+<tr><td align='right'>
+<a href='/douban/{{page}}'>下一页</a>
+</td></tr>
+</table>
+<br>
+</div>
+</form>
+{% endblock %}

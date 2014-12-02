@@ -39,8 +39,9 @@ class vote_rank(models.Model):
     url      = models.CharField(max_length=256)
     del_flag = models.IntegerField(default=0)
     share_flag = models.IntegerField(default=0)
+    play_time= models.IntegerField(default=0)
     def __str__(self):
-        return '%s %s %s %s %s %s %s' % (self.id, self.player, self.score, self.name.encode('utf-8'), self.url, self.del_flag, self.share_flag)
+        return '%s %s %s %s %s %s %s %s' % (self.id, self.player, self.score, self.name.encode('utf-8'), self.url, self.del_flag, self.share_flag, self.play_time)
 
 class vote_admin(models.Model):
     anynomous = models.IntegerField(default=1)

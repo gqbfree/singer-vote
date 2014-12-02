@@ -189,6 +189,7 @@ def douban_shanghai_rent():
     with open("/home/qingbo_gao/martin/scrapy/project/douban_rent/douban_data_utf8.json") as f:
         for line in f.readlines():
             j = json.loads(line)   
+            #rent_info.append(["".join(j['title']), j['link'], "".join(j['desc'])])
             rent_info.append([j['title'], j['link'], j['desc']])
     
     return rent_info

@@ -113,6 +113,7 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     '/home/qingbo_gao/martin/mysite/worldcup/app_worldcup/Templates',
     '/home/qingbo_gao/martin/mysite/worldcup/app_singervote/Templates',
+    '/home/qingbo_gao/martin/mysite/worldcup/app_doubanrent/Templates',
 )
 
 INSTALLED_APPS = (
@@ -127,6 +128,7 @@ INSTALLED_APPS = (
     'app_dbop',
     'app_worldcup',
     'app_singervote',
+    'app_doubanrent',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

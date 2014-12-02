@@ -4,6 +4,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from wcproc import *
 from singervote import *
+from doubanrent import *
 
 admin.autodiscover()
 
@@ -32,6 +33,7 @@ urlpatterns = patterns('',
     (r'^logout/', singervote_admin_logout),
     (r'^play/(.+)/', singervote_play),
     (r'^share/', singervote_share),
+    (r'^douban/', doubanrent_display),
 )
 
 #from django.conf import settings if settings.DEBUG is False:
