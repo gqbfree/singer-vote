@@ -7,7 +7,8 @@ import json
 def doubanrent_read(page_num):
     rent_info = []
     list_dict = {}
-    total_num = 100
+    per_page  = 20
+    total_num = 1000
     total_page= 0
     start     = 0
     item_count= 0
@@ -17,21 +18,21 @@ def doubanrent_read(page_num):
 #            total_num = int("".join(j['total_num']))
 #    print total_num
 
-    total_page = total_num/10 + 1
+    total_page = total_num/per_page+ 1
 
     if page_num == 0 or total_page == 1:
         page_num = 1
     elif page_num > total_page:
         page_num = total_page
 
-    start = (page_num - 1) * 10 + 1
+    start = (page_num - 1) * per_page + 1
     with open("/home/qingbo_gao/martin/scrapy/project/douban_rent/douban_data_utf8.json") as f:
         for line in f.readlines():
             j = json.loads(line) 
             item_count += 1  
             if item_count < start:
                 continue
-            elif item_count > start + 10 :
+            elif item_count > start + per_page :
                 break
             else:
                 rent_info.append([j['title'], j['link'], j['desc']])

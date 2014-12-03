@@ -5,6 +5,17 @@
 <form id='guess_form' action='.' method='POST'>	
 <div id="content">
 <table cellpadding='1' width='70%' align='center'>
+<tr><td align='right'>
+{%ifequal page_num 1 %}
+首页
+上一页
+<a href='/douban/{{page_next}}'>下一页</a>
+{%else%}
+<a href='/douban/1'>首页</a>
+<a href='/douban/{{page_prev}}'>上一页</a>
+<a href='/douban/{{page_next}}'>下一页</a>
+{%endifequal%}
+</td></tr>
 {%for title, link, desc in rent_info%}
 <tr><td><a href='{{link}}' target='_blank'><h3>{{title}}</h3></a></td><tr>
 <tr><td>
@@ -12,8 +23,15 @@
 </td></tr>
 {%endfor%}
 <tr><td align='right'>
+{%ifequal page_num 1 %}
+首页
+上一页
+<a href='/douban/{{page_next}}'>下一页</a>
+{%else%}
+<a href='/douban/1'>首页</a>
 <a href='/douban/{{page_prev}}'>上一页</a>
 <a href='/douban/{{page_next}}'>下一页</a>
+{%endifequal%}
 </td></tr>
 </table>
 <br>
