@@ -33,7 +33,7 @@ urlpatterns = patterns('',
     (r'^logout/', singervote_admin_logout),
     (r'^play/(.+)/', singervote_play),
     (r'^share/', singervote_share),
-    (r'^douban/', doubanrent_display),
+    (r'^douban/(\d*)', doubanrent_display),
 )
 
 #from django.conf import settings if settings.DEBUG is False:

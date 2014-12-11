@@ -1,4 +1,4 @@
 1. Create a new app, and adding it into setting.py "INSTALL_APP";
-2. Modifying the url.py, adding new page and corresponding process function;
+2. Modifying the url.py, adding new module and corresponding process function;
 3. Adding new path into /usr/local/lib/python2.7/dist-packages/my_app.pth
 4. run "python manage.py syncdb" to create new db table, which won't impact to old tables; 
