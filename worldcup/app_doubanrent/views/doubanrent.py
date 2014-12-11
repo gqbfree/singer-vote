@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
+from django.core.cache import cache
 import os,re,datetime
 import json
+import redis
+
+r = redis.StrictRedis(host='localhost', port='6379', db=0)
 
 def doubanrent_read(page_num):
     rent_info = []
@@ -24,6 +28,13 @@ def doubanrent_read(page_num):
         page_num = 1
     elif page_num > total_page:
         page_num = total_page
+
+    test = r.get('page_num')
+    if test:
+        print 'cache: '+str(test)+'  current:'+str(page_num)
+
+    r.set('page_num', page_num)
+
 
     start = (page_num - 1) * per_page + 1
     with open("/home/qingbo_gao/martin/scrapy/project/douban_rent/douban_data_utf8.json") as f:
